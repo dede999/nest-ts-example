@@ -24,6 +24,10 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
+## References
+
+Book #1 -- [**Build a Recipe App with Nest.js and MongoDB**](https://www.sitepoint.com/premium/books/build-a-recipe-app-with-nest-js-and-mongodb/read/1/k8z5mc4z)
+
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.

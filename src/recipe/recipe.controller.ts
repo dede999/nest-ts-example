@@ -1,5 +1,5 @@
 import { FilterRecipeDTO } from './dto/filter-recipe.dto';
-import { Controller, Post, Body, Get, Param, NotFoundException, Put, Delete, Query } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, NotFoundException, Put, Delete, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDTO } from './dto/create-recipe.dto';
 
@@ -9,6 +9,7 @@ export class RecipeController {
   constructor(private recipeService: RecipeService) {}
 
   @Post('/new')
+  @UsePipes(ValidationPipe)
   async addRecipe(@Body() createRecipeDTO: CreateRecipeDTO) {
     const recipe = await this.recipeService.addRecipe(createRecipeDTO);
     return recipe;
@@ -39,7 +40,7 @@ export class RecipeController {
     return recipe;
   }
 
-  @Delete('/:recipeID/update')
+  @Delete('/:recipeID/delete')
   async deleteRecipe(@Param('recipeID') recipeID) {
     const recipe = await this.recipeService.deleteRecipe(recipeID);
     if (!recipe) throw new NotFoundException('Recipe does not exist!');

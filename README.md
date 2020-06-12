@@ -77,3 +77,37 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
   Nest is [MIT licensed](LICENSE).
+
+## Running a little experiment about compression
+
+According to [Compression Recipe Page](https://docs.nestjs.com/techniques/compression), it can
+greatly decrease the size of the response body, thereby increasing the speed of a web app.
+In order to check this out, I'll compare the time taken for each request. I'll run the requests
+on Postman
+
+### Without Compressing
+
+![Post **57 ms**]('./images/post_wo_comp.png')
+![Get All **35 ms**]('./images/post_wo_comp.png')
+![Get One **14 ms**]('./images/post_wo_comp.png')
+![Put **42 ms**]('./images/post_wo_comp.png')
+![Delete **11 ms**]('./images/post_wo_comp.png')
+
+### With Compressing
+
+![Post **18 ms**]('./images/post_wo_comp.png')
+![Get All **19 ms**]('./images/post_wo_comp.png')
+![Get One **13 ms**]('./images/post_wo_comp.png')
+![Put **37 ms**]('./images/post_wo_comp.png')
+![Delete **13 ms**]('./images/post_wo_comp.png')
+
+### Conclusion
+
+As promised, it became faster indeed. And though I believe it wouldn't be as evident as it was if the dataset was larger, results show a noticable difference. In case you want to run these test on your machine, go to `src/main.ts` and coment an specific line
+
+```ts
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  // app.use(compression()) comment this line
+
+```

@@ -95,11 +95,11 @@ on Postman
 
 ### With Compressing
 
-![Post **18 ms**]('images/post_wo_comp.png')
-![Get All **19 ms**]('images/post_wo_comp.png')
-![Get One **13 ms**]('images/post_wo_comp.png')
-![Put **37 ms**]('images/post_wo_comp.png')
-![Delete **13 ms**]('images/post_wo_comp.png')
+![Post **18 ms**](images/post_wo_comp.png)
+![Get All **19 ms**](images/post_wo_comp.png)
+![Get One **13 ms**](images/post_wo_comp.png)
+![Put **37 ms**](images/post_wo_comp.png)
+![Delete **13 ms**](images/post_wo_comp.png)
 
 ### Conclusion
 

@@ -87,11 +87,11 @@ on Postman
 
 ### Without Compressing
 
-![Post **57 ms**]('./images/post_wo_comp.png')
-![Get All **35 ms**]('./images/post_wo_comp.png')
-![Get One **14 ms**]('./images/post_wo_comp.png')
-![Put **42 ms**]('./images/post_wo_comp.png')
-![Delete **11 ms**]('./images/post_wo_comp.png')
+![Post **57 ms**](images/post_wo_comp.png)
+![Get All **35 ms**](images/post_wo_comp.png)
+![Get One **14 ms**](images/post_wo_comp.png)
+![Put **42 ms**](images/post_wo_comp.png)
+![Delete **11 ms**](images/post_wo_comp.png)
 
 ### With Compressing
 

@@ -4,7 +4,7 @@ import { AppController } from './app.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ScheduleModule } from '@nestjs/schedule';
 import { RecipeModule } from './recipe/recipe.module';
-import { CronTaskService } from './cron-task/cron-task.service';
+// import { CronTaskService } from './cron-task/cron-task.service';
 
 
 @Module({
@@ -14,6 +14,6 @@ import { CronTaskService } from './cron-task/cron-task.service';
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }),
   ],
   controllers: [AppController],
-  providers: [AppService, CronTaskService],
+  providers: [AppService],
 })
 export class AppModule {}

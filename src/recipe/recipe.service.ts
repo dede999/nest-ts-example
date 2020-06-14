@@ -9,7 +9,7 @@ import { FilterRecipeDTO } from './dto/filter-recipe.dto';
 export class RecipeService {
   constructor(@InjectModel('Recipe') private readonly recipeModel: Model<Recipe>) {}
 
-  async fiterRecipes (filter: FilterRecipeDTO): Promise<Recipe[]> {
+  async filterRecipes (filter: FilterRecipeDTO): Promise<Recipe[]> {
     let recipes = await this.allRecipes();
     const { category, search } = filter;
 
@@ -32,6 +32,7 @@ export class RecipeService {
     return newRecipe.save();
   }
 
+  
   async allRecipes(): Promise<Recipe[]> {
     const recipes = await this.recipeModel.find().exec();
     return recipes;

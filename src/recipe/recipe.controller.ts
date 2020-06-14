@@ -20,7 +20,7 @@ export class RecipeController {
   @Get('/all')
   async allRecipes(@Query() filters: FilterRecipeDTO) {
     if(Object.keys(filters).length) {
-      const filteredRecipes = this.recipeService.fiterRecipes(filters)
+      const filteredRecipes = this.recipeService.filterRecipes(filters)
       return filteredRecipes;
     } else {
       const recipes = await this.recipeService.allRecipes();

@@ -103,7 +103,7 @@ on Postman
 
 ### Conclusion
 
-As promised, it became faster indeed. And though I believe it wouldn't be as evident as it was if the dataset was larger, results show a noticable difference. In case you want to run these test on your machine, go to `src/main.ts` and coment an specific line
+As promised, it became faster indeed. And though I believed it wouldn't be as evident as it was if the dataset was larger, results showed a noticable difference. In case you want to run these test on your machine, go to `src/main.ts` and coment an specific line
 
 ```ts
 async function bootstrap() {

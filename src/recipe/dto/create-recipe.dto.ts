@@ -16,7 +16,7 @@ export class CreateRecipeDTO {
   @IsNotEmpty()
   category: string;
   
-  @ApiProperty({ type: [String]})
+  @ApiProperty({ type: [String] })
   ingredients: Array<string>;
   
   @ApiPropertyOptional()  

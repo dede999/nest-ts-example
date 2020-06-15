@@ -4,12 +4,12 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestFactory } from '@nestjs/core';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
   app.use(compression())
 
   const options = new DocumentBuilder()
     .setTitle('NestJS sandbox')
-    .setDescription('Learing from some recipes seen on docs')
+    .setDescription('Learning from some recipes seen on docs')
     .build();
   
   const docs = SwaggerModule.createDocument(app, options);

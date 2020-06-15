@@ -13,18 +13,15 @@ export class RecipeController {
   @Post('/new')
   @UsePipes(ValidationPipe)
   async addRecipe(@Body() createRecipeDTO: CreateRecipeDTO) {
-    const recipe = await this.recipeService.addRecipe(createRecipeDTO);
-    return recipe;
+    return await this.recipeService.addRecipe(createRecipeDTO);
   }
 
   @Get('/all')
   async allRecipes(@Query() filters: FilterRecipeDTO) {
     if(Object.keys(filters).length) {
-      const filteredRecipes = this.recipeService.filterRecipes(filters)
-      return filteredRecipes;
+      return this.recipeService.filterRecipes(filters)
     } else {
-      const recipes = await this.recipeService.allRecipes();
-      return recipes;
+      return await this.recipeService.allRecipes();
     }
   }
 

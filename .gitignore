@@ -36,4 +36,8 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# Keys
 /prisma/.env
+
+# Uploaded Files
+/files

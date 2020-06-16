@@ -1,4 +1,4 @@
 export class FilterRecipeDTO {
-  search: string
-  category: string
+  search: string;
+  category: string;
 }

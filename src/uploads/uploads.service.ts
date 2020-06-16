@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class UploadsService extends PrismaClient {
-  constructor() { super() };
+  constructor() {
+    super();
+  }
 
   async onModuleInit() {
     await this.connect();

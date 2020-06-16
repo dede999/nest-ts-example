@@ -1,4 +1,4 @@
 export default interface Uploads {
-  id: number
-  title: string
+  id: number;
+  title: string;
 }

@@ -1,11 +1,13 @@
-import { Module } from "@nestjs/common";
-import { AppService } from "./app.service";
 import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { AuthModule } from "./auth/auth.module";
+import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { ScheduleModule } from "@nestjs/schedule";
 import { RecipeModule } from "./recipe/recipe.module";
-// import { CronTaskService } from './cron-task/cron-task.service';
+import { ScheduleModule } from "@nestjs/schedule";
 import { UploadsModule } from "./uploads/uploads.module";
+import { UsersModule } from "./users/users.module";
+// import { CronTaskService } from './cron-task/cron-task.service';
 
 @Module({
   imports: [
@@ -17,6 +19,8 @@ import { UploadsModule } from "./uploads/uploads.module";
       useFindAndModify: false,
     }),
     UploadsModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

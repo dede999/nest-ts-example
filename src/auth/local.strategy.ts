@@ -1,4 +1,3 @@
-import UserInterface from "src/users/user.interface";
 import { AuthService } from "./auth.service";
 import { Injectable } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
@@ -10,7 +9,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super();
   }
 
-  validate(user: UserInterface, password: string): boolean {
-    return this.auth.validateUser(user, password);
+  async validate(email: string, password: string) {
+    return await this.auth.validateUser(email, password);
   }
 }

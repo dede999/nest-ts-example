@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model token {
+  createdat DateTime? @default(now())
+  isvalid   Boolean?  @default(true)
+  usertoken String    @id
+}
+
 model uploads {
   id       Int     @default(autoincrement()) @id
   path     String  @unique

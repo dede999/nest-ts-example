@@ -1,0 +1,5 @@
+CREATE TABLE Token (
+  userToken VARCHAR(200) PRIMARY KEY,
+  isValid   BOOLEAN      DEFAULT TRUE,
+  createdAt TIMESTAMP    DEFAULT NOW()
+);

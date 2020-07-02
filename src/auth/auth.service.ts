@@ -1,19 +1,24 @@
 import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
+import { JwtService } from "@nestjs/jwt";
+import { users } from "@prisma/client";
+import { UsersService } from "src/users/users.service";
+import { v4 as uuid4 } from "uuid";
 import {
   Injectable,
   UnauthorizedException,
   NotFoundException,
 } from "@nestjs/common";
-import { users } from "@prisma/client";
-import { UsersService } from "src/users/users.service";
-import { v4 as uuid4 } from "uuid";
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
   /**
-   * Method to validate an user
+   * Method to validate an user -- to be deprecated
    * @param email
    * @param password
    * @returns The correspondent user
@@ -38,7 +43,7 @@ export class AuthService {
   }
 
   /**
-   * Method to validate an user II
+   * Method to validate an user
    * @param email
    * @param password
    * @returns if the credentials are valid
@@ -73,5 +78,14 @@ export class AuthService {
         nickname: true,
       },
     });
+  }
+
+  validateToken(auth: string): object | string {
+    try {
+      const decoded = jwt.verify(auth, process.env.SECRET);
+      return decoded;
+    } catch (err) {
+      console.error(err);
+    }
   }
 }

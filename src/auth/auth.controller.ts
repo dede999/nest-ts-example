@@ -25,7 +25,13 @@ export class AuthController {
     const user = await this.auth.createUser(email, password).catch(err => {
       throw new HttpException(`${err}`, 422);
     });
-    return user;
+    const { uid, nickname } = user;
+    const token = await this.users.token.create({
+      data: {
+        usertoken: jwt.sign({ uid, nickname }, process.env.SECRET),
+      },
+    });
+    return { user, token };
   }
 
   @Post("/login")

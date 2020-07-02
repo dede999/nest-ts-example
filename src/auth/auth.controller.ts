@@ -1,13 +1,14 @@
+import * as jwt from "jsonwebtoken";
+import { AuthGuard } from "./guards/auth.guard";
 import { AuthService } from "./auth.service";
+import { UsersService } from "../users/users.service";
 import {
   Body,
   Controller,
   Post,
   HttpException,
   UseGuards,
-  HttpCode,
 } from "@nestjs/common";
-import { AuthGuard } from "./auth.guard";
 
 interface AuthInterface {
   email: string;
@@ -16,7 +17,7 @@ interface AuthInterface {
 
 @Controller("auth")
 export class AuthController {
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private users: UsersService) {}
 
   @Post("/sign_in")
   async createUser(@Body("authCred") authCred: AuthInterface) {
@@ -27,16 +28,16 @@ export class AuthController {
     return user;
   }
 
-  @HttpCode(200)
   @Post("/login")
   @UseGuards(AuthGuard)
   async login(@Body("authCred") authCred: AuthInterface) {
-    console.log(`Got to the request`);
-
-    // const { email, password } = authCred;
-    // const user = await this.auth.validateUser(email, password);
-
-    return authCred;
+    const { email } = authCred;
+    const user = await this.users.users.findOne({ where: { email } });
+    const { uid, nickname } = user;
+    return {
+      accessToken: jwt.sign({ uid, nickname }, process.env.SECRET),
+      data: { uid, nickname },
+    };
   }
 }
 

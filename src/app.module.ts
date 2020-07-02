@@ -7,11 +7,13 @@ import { RecipeModule } from "./recipe/recipe.module";
 import { ScheduleModule } from "@nestjs/schedule";
 import { UploadsModule } from "./uploads/uploads.module";
 import { UsersModule } from "./users/users.module";
+import { ConfigModule } from "@nestjs/config";
 // import { CronTaskService } from './cron-task/cron-task.service';
 
 @Module({
   imports: [
     RecipeModule,
+    ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
     MongooseModule.forRoot("mongodb://localhost/recipe-app", {
       useNewUrlParser: true,

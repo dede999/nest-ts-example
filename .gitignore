@@ -38,6 +38,7 @@ lerna-debug.log*
 
 # Keys
 /prisma/.env
+.env
 
 # Uploaded Files
 /files

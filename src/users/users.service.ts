@@ -8,11 +8,12 @@ export class UsersService extends PrismaClient {
     super();
   }
 
-  async findUser(email: string): Promise<UserInterface> {
-    return await this.users.findOne({
-      where: {
-        email: email,
-      },
-    });
+  async findUserByEmail(email: string): Promise<UserInterface> {
+    const allUsers = await this.findAll();
+    return allUsers.find(user => user.email === email)
+  }
+
+  private async findAll(): Promise<UserInterface[]> {
+    return await this.users.findMany();
   }
 }

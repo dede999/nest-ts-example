@@ -5,13 +5,11 @@ import {
   HttpException,
   HttpStatus,
 } from "@nestjs/common";
-import { AuthService } from "../auth.service";
+import { Token } from "../token";
 
 @Injectable()
 export class TokenGuard implements CanActivate {
-  constructor(private auth: AuthService) {}
-
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const { authorization } = request.headers;
     if (!authorization) {
@@ -19,10 +17,11 @@ export class TokenGuard implements CanActivate {
     } else {
       const [title, token] = authorization.split(" ");
       if (title === "Bearer") {
-        this.auth.validateToken(token);
-        return true;
+        const decodedTokenObject = await Token.check(token);
+        if (decodedTokenObject.uuid) return true;
+        throw new HttpException("", HttpStatus.UNAUTHORIZED);
       }
-      throw new HttpException("Invalid Token", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Invalid Header", HttpStatus.BAD_REQUEST);
     }
   }
 }

@@ -1,0 +1,10 @@
+-- CREATE OR REPLACE FUNCTION invalidate_previous_tokens() RETURNS TRIGGER AS $$
+--   DECLARE
+--   BEGIN
+--   END;
+-- $$ LANGUAGE plpgsql;
+--
+-- CREATE TRIGGER token_trigger
+--     AFTER INSERT ON token
+--     FOR EACH ROW
+--     EXECUTE PROCEDURE invalidate_previous_tokens();

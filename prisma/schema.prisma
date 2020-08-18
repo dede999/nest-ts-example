@@ -7,8 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model token {
+  createdat DateTime? @default(now())
+  isvalid   Boolean?  @default(true)
+  usertoken String    @id
+}
+
 model uploads {
-  id    Int    @default(autoincrement()) @id
-  path  String @unique
-  title String
+  id       Int     @default(autoincrement()) @id
+  path     String  @unique
+  title    String
+  user_uid String?
+  users    users?  @relation(fields: [user_uid], references: [uid])
+}
+
+model users {
+  email    String    @unique
+  nickname String?   @default("")
+  password String
+  uid      String    @id
+  uploads  uploads[]
 }

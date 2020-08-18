@@ -1,0 +1,8 @@
+-- ALTER TABLE Uploads
+-- ADD user_uid UUID;
+
+ALTER TABLE Uploads
+ADD CONSTRAINT FK_User
+FOREIGN KEY (user_uid) 
+REFERENCES Users(uid)
+  ON DELETE CASCADE;

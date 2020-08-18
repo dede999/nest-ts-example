@@ -8,15 +8,18 @@ import {
   UploadedFile,
   UseInterceptors,
   Body,
+  UseGuards,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer";
+import { TokenGuard } from "src/auth/guards/token.guard";
 
 @Controller("uploads")
 export class UploadsController {
   constructor(private uploadService: UploadsService) {}
 
   @Get("/all")
+  @UseGuards(TokenGuard)
   async allUploads() {
     return await this.uploadService.uploads.findMany();
   }
@@ -32,7 +35,7 @@ export class UploadsController {
       }),
     }),
   )
-  async uploadFile(@UploadedFile() upFile, @Body("title") title: string) {
+  async uploadFile(@UploadedFile() upFile, @Body("title") title?: string) {
     return await this.uploadService.uploads.create({
       data: {
         path: upFile.originalname,

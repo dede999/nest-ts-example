@@ -60,5 +60,11 @@ describe("RecipeService", () => {
 
       expect(result.length).toBeLessThan(3)
     })
+
+    it("should have called allRecipes method",  async () => {
+      await service.filterRecipes()
+
+      expect(service.allRecipes).toHaveBeenCalled()
+    });
   })
 })

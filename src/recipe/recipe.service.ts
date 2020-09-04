@@ -9,7 +9,7 @@ import { FilterRecipeDTO } from "./dto/filter-recipe.dto";
 export class RecipeService {
   constructor(@InjectModel("Recipe") private readonly recipeModel: Model<Recipe>) {}
 
-  async filterRecipes(filter: FilterRecipeDTO): Promise<Recipe[]> {
+  async filterRecipes(filter: FilterRecipeDTO = {}): Promise<Recipe[]> {
     let recipes = await this.allRecipes();
     const { category, search } = filter;
 
@@ -22,7 +22,6 @@ export class RecipeService {
     if (category) {
       recipes = recipes.filter(recipe => recipe.category === category);
     }
-
     return recipes;
   }
 

@@ -67,4 +67,22 @@ describe("RecipeService", () => {
       expect(service.allRecipes).toHaveBeenCalled()
     });
   })
+
+  describe("allRecipes", () => {
+    beforeEach(() => {
+      model.find = fn().mockReturnValue({
+        exec: fn().mockResolvedValue(someRecipes)
+      })
+    })
+
+    it("should return the array of recipes", async () => {
+      expect(await service.allRecipes()).toEqual(someRecipes)
+    });
+
+    it("should have called find", async () => {
+      await service.allRecipes()
+
+      expect(model.find).toHaveBeenCalled()
+    })
+  })
 })

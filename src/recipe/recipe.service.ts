@@ -26,29 +26,24 @@ export class RecipeService {
   }
 
   async addRecipe(createRecipeDTO: CreateRecipeDTO): Promise<Recipe> {
-    const newRecipe = await this.recipeModel(createRecipeDTO);
-    return newRecipe.save();
+    return await this.recipeModel.create(createRecipeDTO);
   }
 
   async allRecipes(): Promise<Recipe[]> {
-    const recipes = await this.recipeModel.find().exec();
-    return recipes;
+    return await this.recipeModel.find().exec();
   }
 
   async aRecipe(recipeID: string): Promise<Recipe> {
-    const recipe = await this.recipeModel.findById(recipeID).exec();
-    return recipe;
+    return await this.recipeModel.findById(recipeID).exec();
   }
 
   async updateRecipe(recipeID: string, createRecipeDTO: CreateRecipeDTO): Promise<Recipe> {
-    const updatedRecipe = await this.recipeModel.findByIdAndUpdate(recipeID, createRecipeDTO, {
+    return await this.recipeModel.findByIdAndUpdate(recipeID, createRecipeDTO, {
       new: true,
     });
-    return updatedRecipe;
   }
 
   async deleteRecipe(recipeID: string): Promise<any> {
-    const deletedRecipe = await this.recipeModel.findByIdAndRemove(recipeID);
-    return deletedRecipe;
+    return await this.recipeModel.findByIdAndRemove(recipeID);
   }
 }

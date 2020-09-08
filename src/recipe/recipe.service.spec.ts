@@ -85,4 +85,20 @@ describe("RecipeService", () => {
       expect(model.find).toHaveBeenCalled()
     })
   })
+
+  describe("addRecipe", () =>  {
+    beforeEach(() => {
+      model.create = fn().mockResolvedValue(aRecipe)
+    })
+
+    it("the calls are made", async () => {
+      await service.addRecipe(aRecipe)
+
+      expect(model.create).toHaveBeenCalledWith(aRecipe)
+    })
+
+    it("should return the added recipe", async () => {
+      expect(await service.addRecipe(aRecipe)).toEqual(aRecipe)
+    })
+  })
 })

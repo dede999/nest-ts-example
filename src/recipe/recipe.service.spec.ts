@@ -5,7 +5,7 @@ import { Model } from "mongoose";
 import { random } from "faker";
 import { getModelToken } from "@nestjs/mongoose";
 
-const { fn, clearAllMocks, mock } = jest;
+const { fn, clearAllMocks } = jest;
 const { alphaNumeric } = random;
 const recipe = recipeFactory.getOne();
 const someRecipes = recipeFactory.getSome(3);
@@ -14,6 +14,10 @@ describe("RecipeService", function() {
   let model: Model<Recipe>;
   let service: RecipeService;
   const updateArgs = [alphaNumeric(6), recipe, { new: true }];
+
+  afterAll(function name() {
+    clearAllMocks();
+  });
 
   describe.each`
     functionName      | dbMethod               | mockData       | args               | expected
@@ -44,7 +48,7 @@ describe("RecipeService", function() {
       model[dbMethod] = fn().mockResolvedValue(mockData);
     });
 
-    it("should return the expected value for the method", async function() {
+    it("should return an expected value for the method", async function() {
       expect(await service[functionName](...args)).toEqual(expected);
     });
 

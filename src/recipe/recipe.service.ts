@@ -7,7 +7,9 @@ import { FilterRecipeDTO } from "./dto/filter-recipe.dto";
 
 @Injectable()
 export class RecipeService {
-  constructor(@InjectModel("Recipe") private readonly recipeModel: Model<Recipe>) {}
+  constructor(
+    @InjectModel("Recipe") private readonly recipeModel: Model<Recipe>,
+  ) {}
 
   async filterRecipes(filter: FilterRecipeDTO = {}): Promise<Recipe[]> {
     let recipes = await this.allRecipes();
@@ -15,7 +17,8 @@ export class RecipeService {
 
     if (search) {
       recipes = recipes.filter(
-        recipe => recipe.title.includes(search) || recipe.description.includes(search),
+        recipe =>
+          recipe.title.includes(search) || recipe.description.includes(search),
       );
     }
 
@@ -37,13 +40,23 @@ export class RecipeService {
     return await this.recipeModel.findById(recipeID).exec();
   }
 
-  async updateRecipe(recipeID: string, createRecipeDTO: CreateRecipeDTO): Promise<Recipe> {
+  async updateRecipe(
+    recipeID: string,
+    createRecipeDTO: CreateRecipeDTO,
+  ): Promise<Recipe> {
     return await this.recipeModel.findByIdAndUpdate(recipeID, createRecipeDTO, {
       new: true,
     });
   }
 
-  async deleteRecipe(recipeID: string): Promise<any> {
-    return await this.recipeModel.findByIdAndRemove(recipeID);
+  async deleteRecipe(
+    recipeID: string,
+  ): Promise<{ deleted: boolean; message?: string }> {
+    try {
+      await this.recipeModel.remove({ recipeID });
+      return { deleted: true };
+    } catch (err) {
+      return { deleted: false, message: err.message };
+    }
   }
 }

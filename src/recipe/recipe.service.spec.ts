@@ -20,10 +20,9 @@ describe("RecipeService", function() {
   });
 
   describe.each`
-    functionName      | dbMethod               | mockData       | args               | expected
-    ${"addRecipe"}    | ${"create"}            | ${someRecipes} | ${someRecipes}     | ${someRecipes}
-    ${"updateRecipe"} | ${"findByIdAndUpdate"} | ${recipe}      | ${updateArgs}      | ${recipe}
-    ${"deleteRecipe"} | ${"findByIdAndRemove"} | ${recipe}      | ${alphaNumeric(6)} | ${recipe}
+    functionName      | dbMethod               | mockData       | args           | expected
+    ${"addRecipe"}    | ${"create"}            | ${someRecipes} | ${someRecipes} | ${someRecipes}
+    ${"updateRecipe"} | ${"findByIdAndUpdate"} | ${recipe}      | ${updateArgs}  | ${recipe}
   `("$functionName", function({
     functionName,
     dbMethod,
@@ -100,7 +99,7 @@ describe("RecipeService", function() {
     });
   });
 
-  describe("filterRecipes", function() {
+  describe("other methods", function() {
     const titleFilter = { search: someRecipes[0].title };
     const categoryFilter = { category: someRecipes[1].category };
 
@@ -118,26 +117,48 @@ describe("RecipeService", function() {
       service = module.get<RecipeService>(RecipeService);
 
       service.allRecipes = fn().mockResolvedValue(someRecipes);
+      model = module.get<Model<Recipe>>(getModelToken("Recipe"));
+
+      model.remove = fn()
+        .mockResolvedValueOnce(true)
+        .mockRejectedValueOnce(new Error("There is no recipe with the ID"));
     });
 
-    it("should call allRecipes method", async function() {
-      await service.filterRecipes();
+    describe("filterRecipes", function() {
+      it("should call allRecipes method", async function() {
+        await service.filterRecipes();
 
-      expect(service.allRecipes).toHaveBeenCalled();
+        expect(service.allRecipes).toHaveBeenCalled();
+      });
+
+      it.each`
+        title                       | args              | expectation
+        ${"no filters are applied"} | ${{}}             | ${"toEqual"}
+        ${"searching the title"}    | ${titleFilter}    | ${"toBeLessThan"}
+        ${"searching a category"}   | ${categoryFilter} | ${"toBeLessThan"}
+      `(
+        "when $title, result.length is expected $expectation 3",
+        async function({ args, expectation }) {
+          const result = await service.filterRecipes(args);
+
+          expect(result.length)[expectation](3);
+        },
+      );
     });
 
-    it.each`
-      title                       | args              | expectation
-      ${"no filters are applied"} | ${{}}             | ${"toEqual"}
-      ${"searching the title"}    | ${titleFilter}    | ${"toBeLessThan"}
-      ${"searching a category"}   | ${categoryFilter} | ${"toBeLessThan"}
-    `("when $title, result.length is expected $expectation 3", async function({
-      args,
-      expectation,
-    }) {
-      const result = await service.filterRecipes(args);
+    describe("deleteRecipe", function() {
+      it("should return true if an instance was deleted", async function() {
+        expect(await service.deleteRecipe("an existing instance ID")).toEqual({
+          deleted: true,
+        });
 
-      expect(result.length)[expectation](3);
+        expect(
+          await service.deleteRecipe("a non existent instance ID"),
+        ).toEqual({
+          deleted: false,
+          message: "There is no recipe with the ID",
+        });
+      });
     });
   });
 });

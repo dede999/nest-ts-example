@@ -85,21 +85,40 @@ greatly decrease the size of the response body, thereby increasing the speed of 
 In order to check this out, I'll compare the time taken for each request. I'll run the requests
 on Postman
 
-### Without Compressing
+### POST /recipe/new
 
+- Without Compressing
 ![Post **57 ms**](images/post_wo_comp.png)
-![Get All **35 ms**](images/post_wo_comp.png)
-![Get One **14 ms**](images/post_wo_comp.png)
-![Put **42 ms**](images/post_wo_comp.png)
-![Delete **11 ms**](images/post_wo_comp.png)
+- With Compressing
+![Post **18 ms**](images/post_w_comp.png)
 
-### With Compressing
+### GET /recipe/all
 
-![Post **18 ms**](images/post_wo_comp.png)
-![Get All **19 ms**](images/post_wo_comp.png)
-![Get One **13 ms**](images/post_wo_comp.png)
-![Put **37 ms**](images/post_wo_comp.png)
-![Delete **13 ms**](images/post_wo_comp.png)
+- Without Compressing
+![Get All **35 ms**](images/get_wo_comp.png)
+- With Compressing
+![Get All **19 ms**](images/get_w_comp.png)
+
+### GET /recipes/:id
+
+- Without Compressing
+![Get One **14 ms**](images/get_one_wo_comp.png)
+- With Compressing
+![Get One **13 ms**](images/get_one_w_comp.png)
+
+### PUT /recipes/:id
+
+- Without Compressing
+![Put **42 ms**](images/put_wo_comp.png)
+- With Compressing
+![Put **37 ms**](images/put_w_comp.png)
+
+### DELETE /recipes/:id
+
+- Without Compressing
+![Delete **11 ms**](images/del_wo_comp.png)
+- With Compressing
+![Delete **13 ms**](images/del_w_comp.png)
 
 ### Conclusion
 

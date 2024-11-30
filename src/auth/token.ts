@@ -1,8 +1,6 @@
 import * as jwt from "jsonwebtoken";
 import { PrismaClient, token } from "@prisma/client";
 
-const oneHourInMilliseconds = 60 * 60 * 1000;
-
 export class Token {
   private static repo = new PrismaClient().token;
   private static query = new PrismaClient();
